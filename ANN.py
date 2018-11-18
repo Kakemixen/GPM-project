@@ -4,7 +4,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 df  = pd.read_csv("data/ANN/ANN_normalized.csv",   sep=",", header=0)
-df_train, df_test = train_test_split(df, test_size=0.01) #500 rows for validating
+df_train, df_test = train_test_split(df, test_size=0.1) #500 rows for validating
 
 df_train_target = df_train["Winner"]
 df_train_features = df_train.drop("Winner", axis=1)
