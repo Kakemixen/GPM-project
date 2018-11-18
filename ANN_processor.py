@@ -41,5 +41,5 @@ def normalize_adv_matches():
 
 if __name__ == "__main__":
     df = normalize_adv_matches()
-    df.to_csv("data/ANN_normalized.csv", mode="w+")
+    df.to_csv("data/ANN/ANN_normalized.csv", mode="w+", index=False)
 
