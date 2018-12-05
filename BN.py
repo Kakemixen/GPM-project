@@ -5,22 +5,22 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
+#for autocomplete
+atk_def = "Atk/Def ratio"
+sp_atk_def = "Sp.Atk/Def ratio"
+def_atk = "Def/Atk ratio"
+sp_def_atk = "Sp.Def/Atk ratio"
+HP = "HP advantage"
+Type = "Type Advantage"
+Speed = "Speed advantage"
+OA = "Offensive advantage"
+OR = "Offensive ratio"
+DA = "Defensive advantage"
+DR = "Defensive ratio"
+Winner = "Winner"
 
-def create_BN():
+def create_BN_4():
     df  = pd.read_csv("data/BN/BN_discrete.csv",   sep=",", header=0)
-    #for autocomplete
-    atk_def = "Atk/Def ratio"
-    sp_atk_def = "Sp.Atk/Def ratio"
-    def_atk = "Def/Atk ratio"
-    sp_def_atk = "Sp.Def/Atk ratio"
-    HP = "HP advantage"
-    Type = "Type Advantage"
-    Speed = "Speed advantage"
-    OA = "Offensive advantage"
-    OR = "Offensive ratio"
-    DA = "Defensive advantage"
-    DR = "Defensive ratio"
-    Winner = "Winner"
 
     G = BayesianModel()
     G.add_nodes_from(df.columns)
@@ -28,7 +28,20 @@ def create_BN():
     edges = [(atk_def, OR), (sp_atk_def, OR), (Speed, OA), (OR, OA), (def_atk, DR), (sp_def_atk, DR), (HP, DA), (DR, DA), (Type, Winner), (OA, Winner), (DA, Winner)]
     for edge in edges:
         G.add_edge(edge[0], edge[1])
+    return G
 
+def create_BN_4():
+    df  = pd.read_csv("data/BN/BN_discrete.csv",   sep=",", header=0)
+
+    G = BayesianModel()
+    G.add_nodes_from(df.columns)
+    G.add_nodes_from([OA, DA])
+    edges = [(atk_def, OA), (sp_atk_def, OA), (Speed, OA), (def_atk, DA), (sp_def_atk, DA), (HP, DA), (Type, Winner), (OA, Winner), (DA, Winner)]
+    for edge in edges:
+        G.add_edge(edge[0], edge[1])
+    return G
+
+def initialize_G_4(G):
     cpd_atk_def = TabularCPD(atk_def, 4, [[0.25], [0.25], [0.25], [0.25]])
     cpd_sp_atk_def = TabularCPD(sp_atk_def, 4, [[0.25], [0.25], [0.25], [0.25]])
     cpd_def_atk = TabularCPD(def_atk, 4, [[0.25], [0.25], [0.25], [0.25]])
@@ -76,7 +89,7 @@ def create_BN():
     # G.add_cpds(cpd_atk_def, cpd_sp_atk_def, cpd_def_atk, cpd_sp_def_atk, cpd_HP, cpd_type, cpd_speed, cpd_OR, cpd_DR, cpd_OA, cpd_DA, cpd_winner)
     G.add_cpds(cpd_atk_def, cpd_sp_atk_def, cpd_def_atk, cpd_sp_def_atk, cpd_HP, cpd_type, cpd_speed, cpd_OR, cpd_DR, cpd_OA, cpd_DA, cpd_winner)
 
-    print(G.check_model())
+    # print(G.check_model())
     return G
 
 
