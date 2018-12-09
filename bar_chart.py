@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 
 plt.style.use('ggplot')
 
-x = ['Bayesian Network1', 'Bayesian Network 2', 'Artificial Neural Network', 'Desicion Tree']
-energy = [300, 200, 25.06, 187.73]
+x = ['Bayesian Network', 'Bayesian Network Init.', 'Artificial Neural Network', 'Desicion Tree']
+energy = [152, 137, 25, 2]
 x_pos = [i for i, _ in enumerate(x)]
 
 plt.bar(x_pos, energy, color='darkblue')
