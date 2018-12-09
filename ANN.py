@@ -1,5 +1,4 @@
 import tensorflow as tf
-import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import time
@@ -27,7 +26,7 @@ model.compile(optimizer='Adam',
 
 # Train model
 t1 = time.clock()
-history = model.fit(df_train_features.values, df_train_target.values, epochs=10, batch_size=50)
+history = model.fit(df_train_features.values, df_train_target.values, epochs=15, batch_size=20)
 t2 = time.clock()
 
 # Evaluate result
@@ -36,24 +35,22 @@ print('Test accuracy:', test_acc)
 print('Test loss:', test_loss)
 print('Training time:', t2-t1, "seconds")
 
-plot_model(model, to_file='model.png')
-
 # Plot accuracy
 plt.figure(1)
 plt.plot(history.history['acc'])
 plt.title('Model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
-plt.xlim(0,9)
+plt.xlim(0,14)
 plt.legend(['training data'], loc='upper left') 
 
-
 # Plot loss
-plt.figure(2)
-plt.plot(history.history['loss'])
-plt.title('Model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.xlim(0,9)
-plt.legend(['training data'], loc='upper left')
+#plt.figure(2)
+#plt.plot(history.history['loss'])
+#plt.title('Model loss')
+#plt.ylabel('loss')
+#plt.xlabel('epoch')
+#plt.xlim(0,9)
+#plt.legend(['training data'], loc='upper left')
+
 plt.show()
